@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style type="text/css">
+circle.node {
+  cursor: pointer;
+  stroke: #000;
+  stroke-width: .5px;
+}
+
+circle.node.directory {
+  stroke: #9ecae1;
+  stroke-width: 2px;
+}
+
+circle.node.collapsed {
+  stroke: #555;
+}
+
+.nodetext {
+  fill: #252929;
+  font-weight: bold;
+  text-shadow: 0 0 0.2em white;
+}
+
+line.link {
+  fill: none;
+  stroke: #9ecae1;
+  stroke-width: 1.5px;
+}
+
+</style>
+<body>
+<div id="visualization" align="center" width="500px" height="400px"></div>
+<br />
+ <form id="jsonInput">
+        <fieldset>
+          <textarea id="jsonData" cols="180" rows="100"></textarea>
+          <div class="pull-right">
+            <button type="submit" class="btn btn-primary btn-large">Update</button>
+          </div>
+        </fieldset>
+        </form>
+<script src="./d3/d3.js"></script>
+<script type="text/javascript" src="./d3/d3.geom.js"></script>
+<script type="text/javascript" src="./d3/d3.layout.js"></script>
+<script src="./CodeFlower.js"></script>
+<script src="./dataConverter.js"></script>
+
+<script type="text/javascript">
+var currentCodeFlower;
+var createCodeFlower = function(json) {
+  // update the jsonData textarea
+  document.getElementById('jsonData').value = JSON.stringify(json);
+  // remove previous flower to save memory
+  if (currentCodeFlower) currentCodeFlower.cleanup();
+  // adapt layout size to the total number of elements
+  var total = countElements(json);
+  w = parseInt(Math.sqrt(total) * 30, 10);
+  h = parseInt(Math.sqrt(total) * 30, 10);
+  // create a new CodeFlower
+  currentCodeFlower = new CodeFlower("#visualization", w, h).update(json);
+};
+
+d3.json('./json_data/file_in_home_folders.json', createCodeFlower);
+
+</script>

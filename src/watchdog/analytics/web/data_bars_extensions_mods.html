@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<link href="../src/nv.d3.css" rel="stylesheet" type="text/css">
+
+
+<style>
+
+body {
+  overflow-y:scroll;
+}
+
+text {
+  font: 9px sans-serif;
+}
+
+svg {
+  display: block;
+}
+
+#chart1 svg{
+  height: 500px;
+  min-width: 1400px;
+  min-height: 500px;
+
+/*
+  margin: 10px;
+
+  Minimum height and width is a good idea to prevent negative SVG dimensions...
+  For example width should be =< margin.left + margin.right + 1,
+  of course 1 pixel for the entire chart would not be very useful, BUT should not have errors
+*/
+}
+
+</style>
+<body>
+
+  <div id="chart1">
+    <svg></svg>
+  </div>
+<script src="./d3.js"></script>
+<script src="./javascript/d3.v3.min.js"></script>
+<script src="./javascript/nv.d3.js"></script>
+<!-- including all the components so I don't have to minify every time I test in development -->
+<script src="./javascript/tooltip.js"></script>
+<script src="./javascript/utils.js"></script>
+<script src="./javascript/axis.js"></script>
+<script src="./javascript/discreteBar.js"></script>
+<script src="./javascript/discreteBarChart.js"></script>
+<script>
+
+
+
+
+historicalBarChart = [{"name": "flare", "values": [{"name": ".pdf", "size": 191}, {"name": ".aux", "size": 151}, {"name": ".tex", "size": 135}, {"name": ".db-shm", "size": 46}, {"name": ".gz", "size": 26}, {"name": ".dat", "size": 18}, {"name": ".abcdi", "size": 13}, {"name": ".abcdmr", "size": 13}, {"name": ".xml", "size": 8}, {"name": ".ics", "size": 8}, {"name": ".resources", "size": 7}, {"name": ".py", "size": 6}, {"name": ".index", "size": 6}, {"name": ".gz(busy)", "size": 5}, {"name": ".txt", "size": 4}, {"name": ".pset", "size": 3}, {"name": ".version", "size": 3}, {"name": ".doc", "size": 3}, {"name": ".invertedIndex", "size": 3}, {"name": ".bib", "size": 3}, {"name": ".png", "size": 3}, {"name": ".bbl", "size": 3}, {"name": ".pydevinfo", "size": 3}, {"name": ".bak", "size": 2}, {"name": ".odt", "size": 1}, {"name": ".blg", "size": 1}, {"name": ".ini", "size": 1}, {"name": ".spl", "size": 1}, {"name": ".sc", "size": 1}, {"name": ".heu", "size": 1}, {"name": ".abcddb", "size": 1}]}];
+
+	
+d3.json('./json_data/bars_extensions_mods.json', function (data) {	
+  nv.addGraph(function(data) {
+   
+    var chart = nv.models.discreteBarChart()
+      //.staggerLabels(true)
+      .tooltips(true)
+      .showValues(false)
+      .margin({top: 30, right: 20, bottom: 50, left: 175})
+      .transitionDuration(250)
+      ;
+ 
+      chart = chart.x(function(d) { if (d.size > 10) { return d.name; }});
+      chart = chart.y(function(d) { if (d.size > 10) { return d.size;  } });
+
+
+ historicalBarChart.sort(function(a, b) {
+    alert(a.name);
+    if (a.size > b.size)
+      return 1;
+    if (a.size < b.size)
+      return -1;
+    // a must be equal to b
+    return 0;
+});
+
+  d3.select('#chart1 svg')
+      .datum(historicalBarChart)
+      .call(chart);
+  d3.select('#chart1 svg')
+  nv.utils.windowResize(chart.update);
+
+  return chart;
+});
+});
+
+
+</script>
+
+
+  

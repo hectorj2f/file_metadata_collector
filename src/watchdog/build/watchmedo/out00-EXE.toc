@@ -1,0 +1,9 @@
+('/Users/hector/file_metadata_collector/src/watchdog/build/watchmedo/watchmedo',
+ True,
+ False,
+ None,
+ None,
+ [],
+ None,
+ False,
+ 1389967143)

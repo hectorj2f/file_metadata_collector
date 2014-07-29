@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+.node circle {
+  fill: #fff;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+
+.node {
+  font: 10px sans-serif;
+}
+
+.link {
+  fill: none;
+  stroke: #ccc;
+  stroke-width: 1.5px;
+}
+
+</style>
+<script src="./javascript/angular.js"></script>
+<script src="./javascript/angular-route.js"></script>
+
+
+
+
+<body data-ng-app="demoApp">
+<h1>AngularJS</h1>
+<div>
+	<div data-ng-view></div>
+</div>
+
+<script>
+var demoApp = angular.module('demoApp', ['ngRoute']);
+
+demoApp.controller('SimpleController', function ($scope) {
+	$scope.customers=[{name:'Hector',city:'Oviedo'}, {name:'Lucy',city:'Leon'}, {name:'Sindy', city:'San Francisco'}];
+	
+	$scope.addCustomer = function() {
+		$scope.customers.push(
+				{
+					name: $scope.newCustomer.name,
+					city: $scope.newCustomer.city
+				});
+	};
+});
+
+demoApp.config(function ($routeProvider) {
+	$routeProvider
+		.when('/',{
+			controller: 'SimpleController',
+			templateUrl: './index_test_add.html'
+		})		
+		.when('/view2',{
+			controller: 'SimpleController',
+			templateUrl: './index_test_filter.html'
+		})
+		.otherwise({ redirectTo: '/'});
+});
+
+</script>
+
+</body>
+</html>

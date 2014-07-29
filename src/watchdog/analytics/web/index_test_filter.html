@@ -1,0 +1,7 @@
+<div class="container">
+ Name: <input type="text" data-ng-model="city"/> {{ city }}
+<ul>
+<li data-ng-repeat="cust in customers | filter:city | orderBy:'city' "> {{ cust.name }} {{cust.city}}</li>
+</ul>
+
+</div>

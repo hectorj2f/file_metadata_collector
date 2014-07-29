@@ -1,0 +1,31 @@
+Software requirements:
+
+It is needed to install the following software:
+
+sudo easy_install pathtools
+sudo easy_install distribute
+sudo easy_install psycopg2
+sudo easy_install select_backport
+sudo easy_install argh
+sudo easy_install argcomplete	
+sudo easy_install -m matplotlib
+sudo easy_install libyaml OR sudo easy_install pyyaml
+sudo easy_install brew
+sudo easy_install cherrypy
+sudo easy_install watchdog (Install FSevents to handle all the file events using this handler instead of Kqueue)
+
+
+Frequent Questions:
+
+Error: pg_config executable not found.
+
+Please add the directory containing pg_config to the PATH
+or specify the full executable path with the option:
+
+    python setup.py build_ext --pg-config /path/to/pg_config build ...
+
+SOLUTION: PATH=$PATH:/Library/Postgres/9.3/bin
+
+
+Command to run the system:
+/usr/local/watchmedo/watchmedo log --patterns="*.*" --recursive /Users/hector
